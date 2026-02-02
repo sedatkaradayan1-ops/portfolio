@@ -326,33 +326,48 @@ const REELS = [
       );
     };
 
-    const Navbar = () => (
+   const Navbar = () => (
+  <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur">
+    <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+
+      {/* SOL: Profil + İsim */}
       <div className="flex items-center gap-3">
-  <div className="w-9 h-9 rounded-full border-2 border-white overflow-hidden">
-    <img
-      src="/assets/profile.jpg"
-      alt="Sedat Karadayan"
-      className="w-full h-full object-cover"
-    />
-  </div>
-
-  <span className="text-white font-bold text-xl tracking-tighter">
-    SEDAT KARADAYAN
-  </span>
-</div>
-
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#work" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Work</a>
-            <a href="#motion" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Motion</a>
-            <a href="#about" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">About</a>
-            <a href="#contact" className="px-5 py-2 bg-white text-black text-sm font-semibold hover:bg-zinc-200 transition-colors rounded-sm">
-              Let's Talk
-            </a>
-          </div>
+        <div className="w-9 h-9 rounded-full border-2 border-white overflow-hidden">
+          <img
+            src="/assets/profile.jpg"
+            alt="Sedat Karadayan"
+            className="w-full h-full object-cover"
+          />
         </div>
-      </nav>
-    );
 
+        <span className="text-white font-bold text-xl tracking-tighter">
+          SEDAT KARADAYAN
+        </span>
+      </div>
+
+      {/* SAĞ: Menü */}
+      <div className="hidden md:flex items-center gap-8">
+        <a href="#work" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">
+          Work
+        </a>
+        <a href="#motion" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">
+          Motion
+        </a>
+        <a href="#about" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">
+          About
+        </a>
+        <a
+          href="#contact"
+          className="px-5 py-2 bg-white text-black text-sm font-semibold rounded-sm hover:bg-zinc-200 transition-colors"
+        >
+          Let's Talk
+        </a>
+      </div>
+
+    </div>
+  </nav>
+);
+    
     function App() {
       const [selectedProject, setSelectedProject] = useState(null);
       const [selectedReel, setSelectedReel] = useState(null);
