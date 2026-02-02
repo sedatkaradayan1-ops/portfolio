@@ -34,6 +34,10 @@
   <style>
     body { font-family: 'Inter', sans-serif; }
     html { scroll-behavior: smooth; }
+
+    /* hide scrollbar (mobile carousel) */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
 
@@ -41,7 +45,7 @@
   <div id="root"></div>
 
   <script type="text/babel">
-    const { useState, useEffect } = React;
+    const { useState, useEffect, useRef } = React;
 
     // --- ICONS (Lucide yerine inline SVG) ---
     const IconWrapper = ({ children, className }) => (
@@ -161,42 +165,37 @@
       { name: "Digital", icon: <Monitor className="w-5 h-5" />, desc: "Web Design, Social Assets" },
     ];
 
-    // --- REELS (REVIZE) ---
-// Kural: Kapaklar local public/assets -> "/assets/..."
-// Videolar Cloudinary -> tam URL
-const REELS = [
-  {
-    id: 1,
-    title: "BABY PLUS CAR SEAT",
-    thumb: "./assets/baby-plus-car-seat.png",
-    poster: "./assets/baby-plus-car-seat.png",
-    // Dosya adında boşluk var: ya aşağıdaki gibi %20 ile yaz
-    src: "./assets/baby plus car seat.mp4"
-    // EN İYİSİ: dosyayı rename edip "./assets/baby-plus-car-seat.mp4" yap
-  },
-  {
-    id: 2,
-    title: "BABY PLUS BATH SEAT",
-    thumb: "./assets/baby-plus-bath-seat.png",
-    poster: "./assets/baby-plus-bath-seat.png",
-    src: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770027776/Baby_Plus_Bath_Seat_lsn9a9.mp4"
-  },
-  {
-    id: 3,
-    title: "BABY PLUS FOLDABLE BATH TUB",
-    thumb: "./assets/baby-plus-foldablebathtub.png",
-    poster: "./assets/baby-plus-foldablebathtub.png",
-    src: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770028167/BabyPlus_FoldableBathtub_Premium_ProductVideo_gcyu1c.mp4"
-  },
-  {
-    id: 4,
-    title: "CLIENT 4",
-    thumb: "./assets/baby-plus-car-seat.png",
-    poster: "./assets/baby-plus-car-seat.png",
-    src: ""
-  }
-];
-
+    // --- REELS ---
+    const REELS = [
+      {
+        id: 1,
+        title: "BABY PLUS CAR SEAT",
+        thumb: "./assets/baby-plus-car-seat.png",
+        poster: "./assets/baby-plus-car-seat.png",
+        src: "./assets/baby-plus-car-seat.mp4"
+      },
+      {
+        id: 2,
+        title: "BABY PLUS BATH SEAT",
+        thumb: "./assets/baby-plus-bath-seat.png",
+        poster: "./assets/baby-plus-bath-seat.png",
+        src: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770027776/Baby_Plus_Bath_Seat_lsn9a9.mp4"
+      },
+      {
+        id: 3,
+        title: "BABY PLUS FOLDABLE BATH TUB",
+        thumb: "./assets/baby-plus-foldablebathtub.png",
+        poster: "./assets/baby-plus-foldablebathtub.png",
+        src: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770028167/BabyPlus_FoldableBathtub_Premium_ProductVideo_gcyu1c.mp4"
+      },
+      {
+        id: 4,
+        title: "CLIENT 4",
+        thumb: "./assets/baby-plus-car-seat.png",
+        poster: "./assets/baby-plus-car-seat.png",
+        src: ""
+      }
+    ];
 
     // --- COMPONENTS ---
     const ProjectModal = ({ project, onClose }) => {
@@ -287,7 +286,6 @@ const REELS = [
 
     const ReelModal = ({ reel, onClose }) => {
       if (!reel) return null;
-
       const hasVideo = Boolean(reel.src);
 
       return (
@@ -301,7 +299,7 @@ const REELS = [
           </button>
 
           <div className="w-full max-w-md mx-auto px-6">
-            <div className="bg-zinc-900 rounded-sm overflow-hidden border border-zinc-800">
+            <div className="bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800">
               {hasVideo ? (
                 <video
                   src={reel.src}
@@ -326,48 +324,214 @@ const REELS = [
       );
     };
 
-   const Navbar = () => (
-  <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur">
-    <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    const Navbar = () => (
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
 
-      {/* SOL: Profil + İsim */}
-      <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-full border-2 border-white overflow-hidden">
-          <img
-            src="./assets/profile.jpeg" />
-            alt="Sedat Karadayan"
-            className="w-full h-full object-cover"
-          />
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full border-2 border-white overflow-hidden">
+              <img
+                src="./assets/profile.jpeg"
+                alt="Sedat Karadayan"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <span className="text-white font-bold text-xl tracking-tighter">
+              SEDAT KARADAYAN
+            </span>
+          </div>
+
+          <div className="hidden md:flex items-center gap-8">
+            <a href="#work" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">
+              Work
+            </a>
+            <a href="#motion" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">
+              Motion
+            </a>
+            <a href="#about" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">
+              About
+            </a>
+            <a
+              href="#contact"
+              className="px-5 py-2 bg-white text-black text-sm font-semibold rounded-sm hover:bg-zinc-200 transition-colors"
+            >
+              Let's Talk
+            </a>
+          </div>
+
         </div>
+      </nav>
+    );
 
-        <span className="text-white font-bold text-xl tracking-tighter">
-          SEDAT KARADAYAN
-        </span>
-      </div>
+    // --- MOTION SECTION (mobile carousel + desktop grid) ---
+    const MotionSection = ({ reels, onSelectReel }) => {
+      const scrollerRef = useRef(null);
+      const [active, setActive] = useState(0);
 
-      {/* SAĞ: Menü */}
-      <div className="hidden md:flex items-center gap-8">
-        <a href="#work" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">
-          Work
-        </a>
-        <a href="#motion" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">
-          Motion
-        </a>
-        <a href="#about" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">
-          About
-        </a>
-        <a
-          href="#contact"
-          className="px-5 py-2 bg-white text-black text-sm font-semibold rounded-sm hover:bg-zinc-200 transition-colors"
-        >
-          Let's Talk
-        </a>
-      </div>
+      // Determine which item is closest to center of viewport inside scroller
+      useEffect(() => {
+        const el = scrollerRef.current;
+        if (!el) return;
 
-    </div>
-  </nav>
-);
-    
+        let raf = null;
+
+        const updateActive = () => {
+          raf = null;
+          const rect = el.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+
+          let bestIndex = 0;
+          let bestDist = Infinity;
+
+          const kids = Array.from(el.querySelectorAll('[data-reel-card="1"]'));
+          kids.forEach((node, idx) => {
+            const r = node.getBoundingClientRect();
+            const nodeCenter = r.left + r.width / 2;
+            const dist = Math.abs(nodeCenter - centerX);
+            if (dist < bestDist) {
+              bestDist = dist;
+              bestIndex = idx;
+            }
+          });
+
+          setActive(bestIndex);
+        };
+
+        const onScroll = () => {
+          if (raf) return;
+          raf = requestAnimationFrame(updateActive);
+        };
+
+        updateActive();
+        el.addEventListener('scroll', onScroll, { passive: true });
+
+        return () => {
+          el.removeEventListener('scroll', onScroll);
+          if (raf) cancelAnimationFrame(raf);
+        };
+      }, [reels.length]);
+
+      // helpers
+      const cardBase =
+        "relative aspect-[9/16] bg-black overflow-hidden border border-zinc-800 transition-all duration-300 will-change-transform";
+
+      return (
+        <section id="motion" className="py-20 bg-zinc-900">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex flex-col md:flex-row justify-between mb-12">
+              <div>
+                <h2 className="text-3xl font-bold tracking-tight mb-2">Motion & Reels</h2>
+                <p className="text-zinc-400">Campaigns that move.</p>
+              </div>
+              <button className="text-white border-b border-white pb-1 hover:text-zinc-400 hover:border-zinc-400 transition-colors mt-4 md:mt-0 self-start">
+                See All Motion Work
+              </button>
+            </div>
+
+            {/* MOBILE: hero carousel with peeking sides */}
+            <div className="md:hidden">
+              <div
+                ref={scrollerRef}
+                className="no-scrollbar flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-px-[13vw] px-[13vw] pb-2"
+                style={{ WebkitOverflowScrolling: "touch" }}
+              >
+                {reels.map((reel, idx) => {
+                  const isActive = idx === active;
+                  const isNeighbor = Math.abs(idx - active) === 1;
+
+                  const scale = isActive ? "scale-100" : "scale-[0.88]";
+                  const opacity = isActive ? "opacity-100" : (isNeighbor ? "opacity-55" : "opacity-35");
+                  const blur = isActive ? "" : "blur-[0.3px]";
+                  const z = isActive ? "z-20" : "z-10";
+
+                  return (
+                    <button
+                      key={reel.id}
+                      type="button"
+                      data-reel-card="1"
+                      onClick={() => onSelectReel(reel)}
+                      className={`snap-center shrink-0 w-[74vw] ${z} ${scale} transition-transform duration-300`}
+                      aria-label={reel.title}
+                    >
+                      <div className={`${cardBase} rounded-3xl`}>
+                        {/* image */}
+                        <img
+                          src={reel.thumb}
+                          className={`w-full h-full object-cover ${opacity} ${blur}`}
+                          alt={reel.title}
+                          loading="lazy"
+                        />
+
+                        {/* vignette overlay to feel premium */}
+                        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/55" />
+
+                        {/* play button */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-14 h-14 rounded-full border border-white/30 flex items-center justify-center backdrop-blur-sm bg-black/20">
+                            <Play className="w-6 h-6 fill-white text-white" />
+                          </div>
+                        </div>
+
+                        {/* title */}
+                        <div className="absolute bottom-5 left-5 right-5">
+                          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/90 text-left">
+                            {reel.title}
+                          </p>
+                        </div>
+
+                        {/* subtle inner stroke */}
+                        <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-white/10" />
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* tiny hint dots (optional but helps) */}
+              <div className="mt-5 flex items-center justify-center gap-2">
+                {reels.map((_, i) => (
+                  <div
+                    key={i}
+                    className={`h-1.5 rounded-full transition-all ${
+                      i === active ? "w-6 bg-white/80" : "w-1.5 bg-white/25"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* DESKTOP: keep original grid */}
+            <div className="hidden md:grid grid-cols-2 md:grid-cols-4 gap-4">
+              {reels.map((reel) => (
+                <div
+                  key={reel.id}
+                  className="relative aspect-[9/16] bg-black group cursor-pointer overflow-hidden rounded-sm border border-zinc-800 hover:border-zinc-600 transition-colors"
+                  onClick={() => onSelectReel(reel)}
+                >
+                  <img
+                    src={reel.thumb}
+                    className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500"
+                    alt={reel.title}
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform">
+                      <Play className="w-5 h-5 fill-white text-white" />
+                    </div>
+                  </div>
+                  <div className="absolute bottom-4 left-4">
+                    <p className="text-xs font-bold uppercase tracking-widest text-white">{reel.title}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </section>
+      );
+    };
+
     function App() {
       const [selectedProject, setSelectedProject] = useState(null);
       const [selectedReel, setSelectedReel] = useState(null);
@@ -459,44 +623,8 @@ const REELS = [
             </div>
           </section>
 
-          {/* MOTION / REELS */}
-          <section id="motion" className="py-20 bg-zinc-900">
-            <div className="max-w-7xl mx-auto px-6">
-              <div className="flex flex-col md:flex-row justify-between mb-12">
-                <div>
-                  <h2 className="text-3xl font-bold tracking-tight mb-2">Motion & Reels</h2>
-                  <p className="text-zinc-400">Campaigns that move.</p>
-                </div>
-                <button className="text-white border-b border-white pb-1 hover:text-zinc-400 hover:border-zinc-400 transition-colors mt-4 md:mt-0 self-start">
-                  See All Motion Work
-                </button>
-              </div>
-
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {REELS.map((reel) => (
-                  <div
-                    key={reel.id}
-                    className="relative aspect-[9/16] bg-black group cursor-pointer overflow-hidden rounded-sm border border-zinc-800 hover:border-zinc-600 transition-colors"
-                    onClick={() => setSelectedReel(reel)}
-                  >
-                    <img
-                      src={reel.thumb}
-                      className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500"
-                      alt={reel.title}
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform">
-                        <Play className="w-5 h-5 fill-white text-white" />
-                      </div>
-                    </div>
-                    <div className="absolute bottom-4 left-4">
-                      <p className="text-xs font-bold uppercase tracking-widest text-white">{reel.title}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
+          {/* MOTION (mobile carousel + desktop grid unchanged) */}
+          <MotionSection reels={REELS} onSelectReel={setSelectedReel} />
 
           {/* ABOUT & SKILLS */}
           <section id="about" className="py-20 md:py-32">
