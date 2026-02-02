@@ -1,0 +1,10 @@
+127.0.0.1 - - [02/Feb/2026 12:56:12] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [02/Feb/2026 12:56:14] "GET /assets/profile.jpeg HTTP/1.1" 200 -
+127.0.0.1 - - [02/Feb/2026 12:56:14] "GET /assets/baby-plus-bath-seat.png HTTP/1.1" 200 -
+127.0.0.1 - - [02/Feb/2026 12:56:14] "GET /assets/baby-plus-car-seat.png HTTP/1.1" 200 -
+127.0.0.1 - - [02/Feb/2026 12:56:14] "GET /assets/baby-plus-foldablebathtub.png HTTP/1.1" 200 -
+127.0.0.1 - - [02/Feb/2026 12:57:14] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [02/Feb/2026 12:57:15] "GET /assets/profile.jpeg HTTP/1.1" 200 -
+127.0.0.1 - - [02/Feb/2026 12:57:15] "GET /assets/baby-plus-car-seat.png HTTP/1.1" 200 -
+127.0.0.1 - - [02/Feb/2026 12:57:15] "GET /assets/baby-plus-foldablebathtub.png HTTP/1.1" 200 -
+127.0.0.1 - - [02/Feb/2026 12:57:15] "GET /assets/baby-plus-bath-seat.png HTTP/1.1" 200 -
