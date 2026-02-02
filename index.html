@@ -1,0 +1,448 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">import React, { useState, useEffect } from 'react';</p>
+<p class="p1">import { ArrowRight, X, Play, Mail, Instagram, Linkedin, Monitor, Aperture, Layers, Zap, ArrowUpRight } from 'lucide-react';</p>
+<p class="p2"><br></p>
+<p class="p1">// --- DATA ---</p>
+<p class="p2"><br></p>
+<p class="p1">const PROJECTS = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>id: 1,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: "Apex FinTech",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>category: "Branding &amp; Identity",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>year: "2024",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>client: "Apex Financial",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>description: "A complete rebrand for a Series B fintech startup moving from chaotic growth to established authority. We stripped away the playful tech tropes and built a visual system based on solidity and transparency.",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>role: "Lead Designer",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tools: ["Illustrator", "Figma", "Blender"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&amp;w=2700&amp;auto=format&amp;fit=crop",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gallery: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"https://images.unsplash.com/photo-1550534791-2677533605ab?q=80&amp;w=1000&amp;auto=format",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"https://images.unsplash.com/photo-1634942537034-2531766767d1?q=80&amp;w=1000&amp;auto=format"</p>
+<p class="p1"><span class="Apple-converted-space">    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>id: 2,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: "Neon Pulse",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>category: "Motion Design",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>year: "2023",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>client: "Nike (Spec)",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>description: "High-energy motion graphics for a streetwear campaign. The goal was to visualize the rhythm of the city. Synced entirely to a custom audio track, focusing on kinetic typography and rapid cuts.",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>role: "Motion Designer",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tools: ["After Effects", "Cinema 4D"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&amp;w=2000&amp;auto=format",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>isVideo: true,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gallery: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&amp;w=1000&amp;auto=format",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"https://images.unsplash.com/photo-1535295972055-1c762f4483e5?q=80&amp;w=1000&amp;auto=format"</p>
+<p class="p1"><span class="Apple-converted-space">    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>id: 3,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: "Vogue / Future",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>category: "AI Visuals",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>year: "2024",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>client: "Editorial",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>description: "An experimental editorial series exploring the intersection of haute couture and synthetic biology. Using Midjourney v6 with heavy Photoshop compositing to create 'impossible' fabrics.",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>role: "Art Director",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tools: ["Midjourney", "Photoshop", "Lightroom"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>image: "https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&amp;w=2000&amp;auto=format",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gallery: [</p>
+<p class="p1"><span class="Apple-converted-space">       </span>"https://images.unsplash.com/photo-1580974852861-c381510bc98a?q=80&amp;w=1000&amp;auto=format"</p>
+<p class="p1"><span class="Apple-converted-space">    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>id: 4,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: "Mono Coffee",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>category: "Social Media Kit",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>year: "2023",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>client: "Mono Roasters",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>description: "A modular social media template system for a high-end coffee roaster. Designed to be handed off to a non-designer social manager while maintaining strict brand integrity.",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>role: "Visual Designer",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tools: ["Figma", "Canva"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>image: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&amp;w=2000&amp;auto=format",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gallery: [</p>
+<p class="p1"><span class="Apple-converted-space">       </span>"https://images.unsplash.com/photo-1507133750069-bef72f3a2b17?q=80&amp;w=1000&amp;auto=format"</p>
+<p class="p1"><span class="Apple-converted-space">    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>id: 5,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: "Cyber Structure",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>category: "3D Art",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>year: "2024",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>client: "Personal",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>description: "Exploration of brutalist architecture in a digital space.",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>role: "3D Artist",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tools: ["Blender", "Octane"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>image: "https://images.unsplash.com/photo-1487800940032-1cf21118ccde?q=80&amp;w=2000&amp;auto=format",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gallery: []</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">   </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>id: 6,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: "Echo",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>category: "Web Design",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>year: "2023",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>client: "Tech Startup",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>description: "UI/UX for a sound analysis platform.",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>role: "Product Designer",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tools: ["Figma", "React"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&amp;w=2000&amp;auto=format",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gallery: []</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">const SKILLS = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ name: "Graphic Design", icon: &lt;Layers className="w-5 h-5" /&gt;, desc: "Layout, Typography, Print" },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ name: "Motion Design", icon: &lt;Play className="w-5 h-5" /&gt;, desc: "2D/3D Animation, Reels" },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ name: "Brand Systems", icon: &lt;Aperture className="w-5 h-5" /&gt;, desc: "Identity, Guidelines, Strategy" },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ name: "AI Production", icon: &lt;Zap className="w-5 h-5" /&gt;, desc: "Generative Visuals, Upscaling" },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ name: "Digital", icon: &lt;Monitor className="w-5 h-5" /&gt;, desc: "Web Design, Social Assets" },</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">// --- COMPONENTS ---</p>
+<p class="p2"><br></p>
+<p class="p1">const ProjectModal = ({ project, onClose }) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!project) return null;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm animate-in fade-in duration-300"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* Close Button */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>onClick={onClose}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>className="absolute top-6 right-6 p-2 text-white/50 hover:text-white transition-colors z-50"</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;X size={32} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/button&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* Modal Content */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div className="w-full h-full overflow-y-auto bg-zinc-950/50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="max-w-5xl mx-auto px-6 py-20 lg:py-32"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">          </span></p>
+<p class="p1"><span class="Apple-converted-space">          </span>{/* Header */}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="mb-12 border-b border-zinc-800 pb-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="flex flex-col md:flex-row md:items-end justify-between gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span className="text-zinc-500 text-sm uppercase tracking-widest font-medium mb-2 block"&gt;{project.category}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 className="text-4xl md:text-6xl font-bold text-white tracking-tighter"&gt;{project.title}&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="text-zinc-400 font-mono"&gt;{project.year}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>{/* Hero Image */}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="w-full aspect-video bg-zinc-900 mb-16 overflow-hidden rounded-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;img<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">              </span>src={project.image}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">              </span>alt={project.title}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">              </span>className="w-full h-full object-cover"</p>
+<p class="p1"><span class="Apple-converted-space">            </span>/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>{/* Grid Details */}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-20"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="lg:col-span-2 space-y-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 className="text-white text-xl font-medium mb-4"&gt;The Challenge&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p className="text-zinc-400 leading-relaxed text-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>{project.description}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">              </span></p>
+<p class="p1"><span class="Apple-converted-space">              </span>{/* Gallery Grid */}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="grid gap-6 mt-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{project.gallery.map((img, index) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;img key={index} src={img} alt="" className="w-full h-auto rounded-sm grayscale hover:grayscale-0 transition-all duration-500" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="space-y-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="border-t border-zinc-800 pt-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h4 className="text-white font-medium mb-2"&gt;Role&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p className="text-zinc-400"&gt;{project.role}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="border-t border-zinc-800 pt-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h4 className="text-white font-medium mb-2"&gt;Client&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p className="text-zinc-400"&gt;{project.client}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="border-t border-zinc-800 pt-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h4 className="text-white font-medium mb-2"&gt;Tools&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;ul className="text-zinc-400 space-y-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>{project.tools.map(tool =&gt; &lt;li key={tool}&gt;{tool}&lt;/li&gt;)}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">          </span></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="flex justify-center pt-10 border-t border-zinc-800"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;button onClick={onClose} className="text-white hover:text-zinc-400 transition-colors uppercase tracking-widest text-sm font-semibold"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Close Project</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>);</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">const Navbar = () =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;nav className="fixed top-0 left-0 w-full z-40 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div className="text-white font-bold text-xl tracking-tighter"&gt;SEDAT KARADAYAN&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div className="hidden md:flex items-center gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;a href="#work" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors"&gt;Work&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;a href="#motion" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors"&gt;Motion&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;a href="#about" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors"&gt;About&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;a href="#contact" className="px-5 py-2 bg-white text-black text-sm font-semibold hover:bg-zinc-200 transition-colors rounded-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>Let's Talk</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/nav&gt;</p>
+<p class="p1">);</p>
+<p class="p2"><br></p>
+<p class="p1">export default function App() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [selectedProject, setSelectedProject] = useState(null);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Prevent background scroll when modal is open</p>
+<p class="p1"><span class="Apple-converted-space">  </span>useEffect(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (selectedProject) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.body.style.overflow = 'hidden';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.body.style.overflow = 'unset';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}, [selectedProject]);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div className="min-h-screen bg-zinc-950 text-white selection:bg-white selection:text-black"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;Navbar /&gt;</p>
+<p class="p2"><span class="Apple-converted-space">      </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* HERO */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;section className="pt-40 pb-20 md:pt-60 md:pb-32 px-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="max-w-7xl mx-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.9] mb-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>Graphic Designer &lt;br/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span className="text-zinc-500"&gt;focused on&lt;/span&gt; bold visuals, &lt;br/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>motion &lt;span className="text-zinc-500"&gt;&amp;&lt;/span&gt; brand systems.</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/h1&gt;</p>
+<p class="p2"><span class="Apple-converted-space">          </span></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="flex flex-col md:flex-row gap-8 md:items-end justify-between max-w-4xl mt-12 md:mt-24"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p className="text-zinc-400 text-lg md:text-xl max-w-md leading-relaxed"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>I help brands and founders turn complex ideas into undeniable visual realities.<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">              </span>Based in Istanbul, working globally.</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/p&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="flex gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;a href="#work" className="group flex items-center gap-2 bg-white text-black px-6 py-3 font-semibold rounded-sm hover:bg-zinc-200 transition-all"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>View Projects<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;a href="#contact" className="flex items-center gap-2 px-6 py-3 font-semibold border border-zinc-800 text-white hover:border-white transition-colors rounded-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Contact</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* SELECTED WORK */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;section id="work" className="py-20 border-t border-zinc-900"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="max-w-7xl mx-auto px-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="flex items-end justify-between mb-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 className="text-3xl font-bold tracking-tight"&gt;Selected Work&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span className="text-zinc-500 text-sm hidden md:block"&gt;2023 — 2025&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{PROJECTS.map((project) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>key={project.id}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>className="group cursor-pointer"</p>
+<p class="p1"><span class="Apple-converted-space">                </span>onClick={() =&gt; setSelectedProject(project)}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="relative overflow-hidden aspect-[4/3] bg-zinc-900 rounded-sm mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>{/* Hover Overlay */}</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" /&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                  </span></p>
+<p class="p1"><span class="Apple-converted-space">                  </span>{project.isVideo &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="absolute top-4 right-4 z-20 bg-black/50 backdrop-blur-md p-2 rounded-full text-white"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;Play className="w-4 h-4 fill-white" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>)}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;img<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>src={project.image}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>alt={project.title}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-out grayscale group-hover:grayscale-0"</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>/&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                  </span></p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;div className="bg-white text-black px-4 py-2 text-sm font-semibold rounded-full flex items-center gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>View Case &lt;ArrowUpRight className="w-4 h-4" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="flex justify-between items-start border-t border-zinc-900 pt-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 className="text-xl font-bold text-white mb-1 group-hover:text-zinc-400 transition-colors"&gt;{project.title}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p className="text-zinc-500 text-sm"&gt;{project.category}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;span className="text-zinc-600 text-sm font-mono"&gt;{project.year}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* MOTION / VIDEO REEL SECTION */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;section id="motion" className="py-20 bg-zinc-900"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="max-w-7xl mx-auto px-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="flex flex-col md:flex-row justify-between mb-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;h2 className="text-3xl font-bold tracking-tight mb-2"&gt;Motion &amp; Reels&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;p className="text-zinc-400"&gt;Campaigns that move.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button className="text-white border-b border-white pb-1 hover:text-zinc-400 hover:border-zinc-400 transition-colors mt-4 md:mt-0 self-start"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>See All Motion Work</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="grid grid-cols-2 md:grid-cols-4 gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>{/* Fake Video Cards using Images */}</p>
+<p class="p1"><span class="Apple-converted-space">             </span>{[1, 2, 3, 4].map((item) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;div key={item} className="relative aspect-[9/16] bg-black group cursor-pointer overflow-hidden rounded-sm border border-zinc-800 hover:border-zinc-600 transition-colors"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;img<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>src={`https://images.unsplash.com/photo-${item === 1 ? '1611162617474-5b21e879e113' : item === 2 ? '1536240478700-b869070f9279' : item === 3 ? '1531297461368-08ad8d475b0b' : '1550745165-9bc0b252726f'}?q=80&amp;w=600&amp;auto=format`}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500"</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>alt="Reel thumbnail"</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;div className="absolute inset-0 flex items-center justify-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                       </span>&lt;Play className="w-5 h-5 fill-white text-white" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;div className="absolute bottom-4 left-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p className="text-xs font-bold uppercase tracking-widest text-white"&gt;Client {item}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* ABOUT &amp; SKILLS */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;section id="about" className="py-20 md:py-32"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="max-w-7xl mx-auto px-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="grid grid-cols-1 md:grid-cols-2 gap-20"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;h2 className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-8"&gt;About Me&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="text-2xl md:text-3xl leading-tight font-medium space-y-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>I bridge the gap between traditional design principles and the modern speed of AI automation.</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p className="text-zinc-400"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>With over 3 years of experience in professional design environments, I have specialized in adapting quickly to generative AI tools. I use technology not to replace creativity, but to execute high-quality, complex visual concepts with precision and efficiency.</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p className="text-zinc-400"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>Currently based in Istanbul, I am focused on producing effective, forward-thinking visual systems for brands that demand quality at speed.</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;h2 className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-8"&gt;Services&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;div className="grid gap-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>{SKILLS.map((skill, index) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                   </span>&lt;div key={index} className="flex items-start gap-4 p-4 border border-zinc-800 rounded-sm hover:bg-zinc-900 transition-colors group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div className="text-zinc-500 group-hover:text-white transition-colors mt-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{skill.icon}</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 className="text-lg font-bold text-white"&gt;{skill.name}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-sm text-zinc-500"&gt;{skill.desc}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                   </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* CONTACT */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;section id="contact" className="py-20 bg-white text-black"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="max-w-7xl mx-auto px-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="grid grid-cols-1 md:grid-cols-2 gap-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;h2 className="text-6xl md:text-8xl font-bold tracking-tighter mb-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Let's work&lt;br/&gt;together.</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;p className="text-lg text-zinc-600 max-w-sm mb-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Have a project in mind? Reach out and let's discuss how we can elevate your brand.</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="flex gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;a href="#" className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;Mail size={24} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;a href="#" className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;Linkedin size={24} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;a href="#" className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;Instagram size={24} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;form className="space-y-6 md:pt-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="space-y-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label className="text-sm font-bold uppercase tracking-wide"&gt;Name&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="text" className="w-full bg-transparent border-b border-zinc-300 py-4 text-xl focus:outline-none focus:border-black transition-colors rounded-none placeholder:text-zinc-300" placeholder="Jane Doe" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="space-y-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label className="text-sm font-bold uppercase tracking-wide"&gt;Email&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="email" className="w-full bg-transparent border-b border-zinc-300 py-4 text-xl focus:outline-none focus:border-black transition-colors rounded-none placeholder:text-zinc-300" placeholder="jane@example.com" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="space-y-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label className="text-sm font-bold uppercase tracking-wide"&gt;Project Details&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;textarea rows={4} className="w-full bg-transparent border-b border-zinc-300 py-4 text-xl focus:outline-none focus:border-black transition-colors rounded-none placeholder:text-zinc-300 resize-none" placeholder="Tell me about your timeline and goals..." /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;button type="button" className="mt-8 px-8 py-4 bg-black text-white font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors rounded-sm w-full md:w-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Send Request</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="border-t border-zinc-200 mt-20 pt-8 flex flex-col md:flex-row justify-between text-sm text-zinc-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;p&gt;&amp;copy; 2024 Sedat Karadayan. All Rights Reserved.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;div className="flex gap-6 mt-4 md:mt-0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;span&gt;Istanbul, TR&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;span&gt;EST 14:00&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* Project Detail Overlay */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{selectedProject &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;ProjectModal project={selectedProject} onClose={() =&gt; setSelectedProject(null)} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>);</p>
+<p class="p1">}</p>
+</body>
+</html>
