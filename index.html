@@ -1,495 +1,578 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sedat Karadayan | Portfolio</title>
-    
-    <!-- Tailwind CSS (Stiller için) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- React ve ReactDOM -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
-    <!-- Babel (JSX kodunu tarayıcıda çalıştırmak için) -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sedat Karadayan | Portfolio</title>
 
-    <!-- Fontlar -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Özel Konfigürasyon -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        zinc: {
-                            950: '#09090b', // Çok koyu arka plan
-                        }
-                    }
-                }
-            }
+  <!-- React -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Babel (dev-ish) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: { zinc: { 950: '#09090b' } }
         }
-    </script>
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        /* Smooth scroll */
-        html { scroll-behavior: smooth; }
-    </style>
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    html { scroll-behavior: smooth; }
+  </style>
 </head>
+
 <body class="bg-zinc-950 text-white selection:bg-white selection:text-black">
-    <div id="root"></div>
+  <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
+  <script type="text/babel">
+    const { useState, useEffect } = React;
 
-        // --- ICONS (Lucide React yerine SVG bileşenleri) ---
-        const IconWrapper = ({ children, className }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                {children}
-            </svg>
-        );
+    // --- ICONS (Lucide yerine inline SVG) ---
+    const IconWrapper = ({ children, className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="24" height="24" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" strokeWidth="2"
+           strokeLinecap="round" strokeLinejoin="round"
+           className={className}>
+        {children}
+      </svg>
+    );
 
-        const ArrowRight = ({ className, size }) => <IconWrapper className={className}><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></IconWrapper>;
-        const X = ({ className, size }) => <IconWrapper className={className}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></IconWrapper>;
-        const Play = ({ className, size }) => <IconWrapper className={className}><polygon points="5 3 19 12 5 21 5 3"/></IconWrapper>;
-        const Mail = ({ className, size }) => <IconWrapper className={className}><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></IconWrapper>;
-        const Instagram = ({ className, size }) => <IconWrapper className={className}><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></IconWrapper>;
-        const Linkedin = ({ className, size }) => <IconWrapper className={className}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></IconWrapper>;
-        const Monitor = ({ className, size }) => <IconWrapper className={className}><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></IconWrapper>;
-        const Aperture = ({ className, size }) => <IconWrapper className={className}><circle cx="12" cy="12" r="10"/><path d="m14.31 8 5.74 9.94"/><path d="M9.69 8h11.48"/><path d="m7.38 12 5.74-9.94"/><path d="M9.69 16 3.95 6.06"/><path d="M14.31 16H2.83"/><path d="m16.62 12-5.74 9.94"/></IconWrapper>;
-        const Layers = ({ className, size }) => <IconWrapper className={className}><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></IconWrapper>;
-        const Zap = ({ className, size }) => <IconWrapper className={className}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></IconWrapper>;
-        const ArrowUpRight = ({ className, size }) => <IconWrapper className={className}><path d="M7 7h10v10"/><path d="M7 17 17 7"/></IconWrapper>;
+    const ArrowRight = ({ className }) => <IconWrapper className={className}><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></IconWrapper>;
+    const X = ({ className }) => <IconWrapper className={className}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></IconWrapper>;
+    const Play = ({ className }) => <IconWrapper className={className}><polygon points="5 3 19 12 5 21 5 3"/></IconWrapper>;
+    const Mail = ({ className }) => <IconWrapper className={className}><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></IconWrapper>;
+    const Instagram = ({ className }) => <IconWrapper className={className}><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></IconWrapper>;
+    const Linkedin = ({ className }) => <IconWrapper className={className}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></IconWrapper>;
+    const Monitor = ({ className }) => <IconWrapper className={className}><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></IconWrapper>;
+    const Aperture = ({ className }) => <IconWrapper className={className}><circle cx="12" cy="12" r="10"/><path d="m14.31 8 5.74 9.94"/><path d="M9.69 8h11.48"/><path d="m7.38 12 5.74-9.94"/><path d="M9.69 16 3.95 6.06"/><path d="M14.31 16H2.83"/><path d="m16.62 12-5.74 9.94"/></IconWrapper>;
+    const Layers = ({ className }) => <IconWrapper className={className}><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></IconWrapper>;
+    const Zap = ({ className }) => <IconWrapper className={className}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></IconWrapper>;
+    const ArrowUpRight = ({ className }) => <IconWrapper className={className}><path d="M7 7h10v10"/><path d="M7 17 17 7"/></IconWrapper>;
 
-        // --- DATA ---
-        const PROJECTS = [
-            {
-                id: 1,
-                title: "Apex FinTech",
-                category: "Branding & Identity",
-                year: "2024",
-                client: "Apex Financial",
-                description: "A complete rebrand for a Series B fintech startup moving from chaotic growth to established authority. We stripped away the playful tech tropes and built a visual system based on solidity and transparency.",
-                role: "Lead Designer",
-                tools: ["Illustrator", "Figma", "Blender"],
-                image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2700&auto=format&fit=crop",
-                gallery: [
-                "https://images.unsplash.com/photo-1550534791-2677533605ab?q=80&w=1000&auto=format",
-                "https://images.unsplash.com/photo-1634942537034-2531766767d1?q=80&w=1000&auto=format"
-                ]
-            },
-            {
-                id: 2,
-                title: "Neon Pulse",
-                category: "Motion Design",
-                year: "2023",
-                client: "Nike (Spec)",
-                description: "High-energy motion graphics for a streetwear campaign. The goal was to visualize the rhythm of the city. Synced entirely to a custom audio track, focusing on kinetic typography and rapid cuts.",
-                role: "Motion Designer",
-                tools: ["After Effects", "Cinema 4D"],
-                image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2000&auto=format",
-                isVideo: true,
-                gallery: [
-                "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format",
-                "https://images.unsplash.com/photo-1535295972055-1c762f4483e5?q=80&w=1000&auto=format"
-                ]
-            },
-            {
-                id: 3,
-                title: "Vogue / Future",
-                category: "AI Visuals",
-                year: "2024",
-                client: "Editorial",
-                description: "An experimental editorial series exploring the intersection of haute couture and synthetic biology. Using Midjourney v6 with heavy Photoshop compositing to create 'impossible' fabrics.",
-                role: "Art Director",
-                tools: ["Midjourney", "Photoshop", "Lightroom"],
-                image: "https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=2000&auto=format",
-                gallery: [
-                "https://images.unsplash.com/photo-1580974852861-c381510bc98a?q=80&w=1000&auto=format"
-                ]
-            },
-            {
-                id: 4,
-                title: "Mono Coffee",
-                category: "Social Media Kit",
-                year: "2023",
-                client: "Mono Roasters",
-                description: "A modular social media template system for a high-end coffee roaster. Designed to be handed off to a non-designer social manager while maintaining strict brand integrity.",
-                role: "Visual Designer",
-                tools: ["Figma", "Canva"],
-                image: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2000&auto=format",
-                gallery: [
-                "https://images.unsplash.com/photo-1507133750069-bef72f3a2b17?q=80&w=1000&auto=format"
-                ]
-            },
-            {
-                id: 5,
-                title: "Cyber Structure",
-                category: "3D Art",
-                year: "2024",
-                client: "Personal",
-                description: "Exploration of brutalist architecture in a digital space.",
-                role: "3D Artist",
-                tools: ["Blender", "Octane"],
-                image: "https://images.unsplash.com/photo-1487800940032-1cf21118ccde?q=80&w=2000&auto=format",
-                gallery: []
-            },
-            {
-                id: 6,
-                title: "Echo",
-                category: "Web Design",
-                year: "2023",
-                client: "Tech Startup",
-                description: "UI/UX for a sound analysis platform.",
-                role: "Product Designer",
-                tools: ["Figma", "React"],
-                image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format",
-                gallery: []
-            }
-        ];
+    // --- DATA ---
+    const PROJECTS = [
+      {
+        id: 1,
+        title: "Apex FinTech",
+        category: "Branding & Identity",
+        year: "2024",
+        client: "Apex Financial",
+        description: "A complete rebrand for a Series B fintech startup moving from chaotic growth to established authority. We stripped away the playful tech tropes and built a visual system based on solidity and transparency.",
+        role: "Lead Designer",
+        tools: ["Illustrator", "Figma", "Blender"],
+        image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2700&auto=format&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1550534791-2677533605ab?q=80&w=1000&auto=format",
+          "https://images.unsplash.com/photo-1634942537034-2531766767d1?q=80&w=1000&auto=format"
+        ]
+      },
+      {
+        id: 2,
+        title: "Neon Pulse",
+        category: "Motion Design",
+        year: "2023",
+        client: "Nike (Spec)",
+        description: "High-energy motion graphics for a streetwear campaign. The goal was to visualize the rhythm of the city. Synced entirely to a custom audio track, focusing on kinetic typography and rapid cuts.",
+        role: "Motion Designer",
+        tools: ["After Effects", "Cinema 4D"],
+        image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2000&auto=format",
+        isVideo: true,
+        gallery: [
+          "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format",
+          "https://images.unsplash.com/photo-1535295972055-1c762f4483e5?q=80&w=1000&auto=format"
+        ]
+      },
+      {
+        id: 3,
+        title: "Vogue / Future",
+        category: "AI Visuals",
+        year: "2024",
+        client: "Editorial",
+        description: "An experimental editorial series exploring the intersection of haute couture and synthetic biology. Using Midjourney v6 with heavy Photoshop compositing to create 'impossible' fabrics.",
+        role: "Art Director",
+        tools: ["Midjourney", "Photoshop", "Lightroom"],
+        image: "https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=2000&auto=format",
+        gallery: [
+          "https://images.unsplash.com/photo-1580974852861-c381510bc98a?q=80&w=1000&auto=format"
+        ]
+      },
+      {
+        id: 4,
+        title: "Mono Coffee",
+        category: "Social Media Kit",
+        year: "2023",
+        client: "Mono Roasters",
+        description: "A modular social media template system for a high-end coffee roaster. Designed to be handed off to a non-designer social manager while maintaining strict brand integrity.",
+        role: "Visual Designer",
+        tools: ["Figma", "Canva"],
+        image: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2000&auto=format",
+        gallery: [
+          "https://images.unsplash.com/photo-1507133750069-bef72f3a2b17?q=80&w=1000&auto=format"
+        ]
+      },
+      {
+        id: 5,
+        title: "Cyber Structure",
+        category: "3D Art",
+        year: "2024",
+        client: "Personal",
+        description: "Exploration of brutalist architecture in a digital space.",
+        role: "3D Artist",
+        tools: ["Blender", "Octane"],
+        image: "https://images.unsplash.com/photo-1487800940032-1cf21118ccde?q=80&w=2000&auto=format",
+        gallery: []
+      },
+      {
+        id: 6,
+        title: "Echo",
+        category: "Web Design",
+        year: "2023",
+        client: "Tech Startup",
+        description: "UI/UX for a sound analysis platform.",
+        role: "Product Designer",
+        tools: ["Figma", "React"],
+        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format",
+        gallery: []
+      }
+    ];
 
-        const SKILLS = [
-            { name: "Graphic Design", icon: <Layers className="w-5 h-5" />, desc: "Layout, Typography, Print" },
-            { name: "Motion Design", icon: <Play className="w-5 h-5" />, desc: "2D/3D Animation, Reels" },
-            { name: "Brand Systems", icon: <Aperture className="w-5 h-5" />, desc: "Identity, Guidelines, Strategy" },
-            { name: "AI Production", icon: <Zap className="w-5 h-5" />, desc: "Generative Visuals, Upscaling" },
-            { name: "Digital", icon: <Monitor className="w-5 h-5" />, desc: "Web Design, Social Assets" },
-        ];
+    const SKILLS = [
+      { name: "Graphic Design", icon: <Layers className="w-5 h-5" />, desc: "Layout, Typography, Print" },
+      { name: "Motion Design", icon: <Play className="w-5 h-5" />, desc: "2D/3D Animation, Reels" },
+      { name: "Brand Systems", icon: <Aperture className="w-5 h-5" />, desc: "Identity, Guidelines, Strategy" },
+      { name: "AI Production", icon: <Zap className="w-5 h-5" />, desc: "Generative Visuals, Upscaling" },
+      { name: "Digital", icon: <Monitor className="w-5 h-5" />, desc: "Web Design, Social Assets" },
+    ];
 
-        // --- COMPONENTS ---
+    // --- REELS (BURAYI DOLDURACAKSIN) ---
+    // NOT: Dosya adında boşluk varsa %20 ile yazmak zorundasın.
+    // En iyisi: dosyayı assets/baby-plus-car-seat.mp4 diye yeniden adlandır.
+    const REELS = [
+      {
+        id: 1,
+        title: "Baby Plus Car Seat",
+        thumb: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=600&auto=format",
+        // A) Dosyayi yeniden adlandirdiysan:
+        // src: "assets/baby-plus-car-seat.mp4",
 
-        const ProjectModal = ({ project, onClose }) => {
-            if (!project) return null;
+        // B) Dosya adin aynen boyleyse:
+        src: "assets/baby%20plus%20car%20seat.mp4"
+      },
+      {
+        id: 2,
+        title: "Client 2",
+        thumb: "https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=600&auto=format",
+        src: "" // sonra doldur
+      },
+      {
+        id: 3,
+        title: "Client 3",
+        thumb: "https://images.unsplash.com/photo-1531297461368-08ad8d475b0b?q=80&w=600&auto=format",
+        src: "" // sonra doldur
+      },
+      {
+        id: 4,
+        title: "Client 4",
+        thumb: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format",
+        src: "" // sonra doldur
+      }
+    ];
 
-            return (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm animate-in fade-in duration-300">
-                    <button 
-                        onClick={onClose}
-                        className="absolute top-6 right-6 p-2 text-white/50 hover:text-white transition-colors z-50"
-                    >
-                        <X size={32} />
-                    </button>
+    // --- COMPONENTS ---
+    const ProjectModal = ({ project, onClose }) => {
+      if (!project) return null;
 
-                    <div className="w-full h-full overflow-y-auto bg-zinc-950/50">
-                        <div className="max-w-5xl mx-auto px-6 py-20 lg:py-32">
-                        
-                        <div className="mb-12 border-b border-zinc-800 pb-8">
-                            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                            <div>
-                                <span className="text-zinc-500 text-sm uppercase tracking-widest font-medium mb-2 block">{project.category}</span>
-                                <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tighter">{project.title}</h2>
-                            </div>
-                            <div className="text-zinc-400 font-mono">{project.year}</div>
-                            </div>
-                        </div>
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm animate-in fade-in duration-300">
+          <button
+            onClick={onClose}
+            className="absolute top-6 right-6 p-2 text-white/50 hover:text-white transition-colors z-50"
+            aria-label="Close project"
+          >
+            <X className="w-8 h-8" />
+          </button>
 
-                        <div className="w-full aspect-video bg-zinc-900 mb-16 overflow-hidden rounded-sm">
-                            <img 
-                            src={project.image} 
-                            alt={project.title} 
-                            className="w-full h-full object-cover"
-                            />
-                        </div>
+          <div className="w-full h-full overflow-y-auto bg-zinc-950/50">
+            <div className="max-w-5xl mx-auto px-6 py-20 lg:py-32">
 
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-20">
-                            <div className="lg:col-span-2 space-y-8">
-                            <div>
-                                <h3 className="text-white text-xl font-medium mb-4">The Challenge</h3>
-                                <p className="text-zinc-400 leading-relaxed text-lg">
-                                {project.description}
-                                </p>
-                            </div>
-                            
-                            <div className="grid gap-6 mt-12">
-                                {project.gallery.map((img, index) => (
-                                <img key={index} src={img} alt="" className="w-full h-auto rounded-sm grayscale hover:grayscale-0 transition-all duration-500" />
-                                ))}
-                            </div>
-                            </div>
-
-                            <div className="space-y-8">
-                            <div className="border-t border-zinc-800 pt-6">
-                                <h4 className="text-white font-medium mb-2">Role</h4>
-                                <p className="text-zinc-400">{project.role}</p>
-                            </div>
-                            <div className="border-t border-zinc-800 pt-6">
-                                <h4 className="text-white font-medium mb-2">Client</h4>
-                                <p className="text-zinc-400">{project.client}</p>
-                            </div>
-                            <div className="border-t border-zinc-800 pt-6">
-                                <h4 className="text-white font-medium mb-2">Tools</h4>
-                                <ul className="text-zinc-400 space-y-1">
-                                {project.tools.map(tool => <li key={tool}>{tool}</li>)}
-                                </ul>
-                            </div>
-                            </div>
-                        </div>
-                        
-                        <div className="flex justify-center pt-10 border-t border-zinc-800">
-                            <button onClick={onClose} className="text-white hover:text-zinc-400 transition-colors uppercase tracking-widest text-sm font-semibold">
-                                Close Project
-                            </button>
-                        </div>
-
-                        </div>
-                    </div>
+              <div className="mb-12 border-b border-zinc-800 pb-8">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                  <div>
+                    <span className="text-zinc-500 text-sm uppercase tracking-widest font-medium mb-2 block">{project.category}</span>
+                    <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tighter">{project.title}</h2>
+                  </div>
+                  <div className="text-zinc-400 font-mono">{project.year}</div>
                 </div>
-            );
-        };
+              </div>
 
-        const Navbar = () => (
-            <nav className="fixed top-0 left-0 w-full z-40 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/50">
-                <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-                    <div className="text-white font-bold text-xl tracking-tighter">SEDAT KARADAYAN</div>
-                    <div className="hidden md:flex items-center gap-8">
-                        <a href="#work" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Work</a>
-                        <a href="#motion" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Motion</a>
-                        <a href="#about" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">About</a>
-                        <a href="#contact" className="px-5 py-2 bg-white text-black text-sm font-semibold hover:bg-zinc-200 transition-colors rounded-sm">
-                            Let's Talk
-                        </a>
-                    </div>
+              <div className="w-full aspect-video bg-zinc-900 mb-16 overflow-hidden rounded-sm">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-20">
+                <div className="lg:col-span-2 space-y-8">
+                  <div>
+                    <h3 className="text-white text-xl font-medium mb-4">The Challenge</h3>
+                    <p className="text-zinc-400 leading-relaxed text-lg">{project.description}</p>
+                  </div>
+
+                  <div className="grid gap-6 mt-12">
+                    {project.gallery.map((img, index) => (
+                      <img
+                        key={index}
+                        src={img}
+                        alt=""
+                        className="w-full h-auto rounded-sm grayscale hover:grayscale-0 transition-all duration-500"
+                      />
+                    ))}
+                  </div>
                 </div>
-            </nav>
-        );
 
-        function App() {
-            const [selectedProject, setSelectedProject] = useState(null);
-
-            useEffect(() => {
-                if (selectedProject) {
-                document.body.style.overflow = 'hidden';
-                } else {
-                document.body.style.overflow = 'unset';
-                }
-            }, [selectedProject]);
-
-            return (
-                <div className="min-h-screen bg-zinc-950 text-white selection:bg-white selection:text-black">
-                <Navbar />
-                
-                {/* HERO */}
-                <section className="pt-40 pb-20 md:pt-60 md:pb-32 px-6">
-                    <div className="max-w-7xl mx-auto">
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.9] mb-8">
-                        Graphic Designer <br/>
-                        <span className="text-zinc-500">focused on</span> bold visuals, <br/>
-                        motion <span className="text-zinc-500">&</span> brand systems.
-                    </h1>
-                    
-                    <div className="flex flex-col md:flex-row gap-8 md:items-end justify-between max-w-4xl mt-12 md:mt-24">
-                        <p className="text-zinc-400 text-lg md:text-xl max-w-md leading-relaxed">
-                        I help brands and founders turn complex ideas into undeniable visual realities. 
-                        Based in Istanbul, working globally.
-                        </p>
-                        
-                        <div className="flex gap-4">
-                        <a href="#work" className="group flex items-center gap-2 bg-white text-black px-6 py-3 font-semibold rounded-sm hover:bg-zinc-200 transition-all">
-                            View Projects 
-                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </a>
-                        <a href="#contact" className="flex items-center gap-2 px-6 py-3 font-semibold border border-zinc-800 text-white hover:border-white transition-colors rounded-sm">
-                            Contact
-                        </a>
-                        </div>
-                    </div>
-                    </div>
-                </section>
-
-                {/* SELECTED WORK */}
-                <section id="work" className="py-20 border-t border-zinc-900">
-                    <div className="max-w-7xl mx-auto px-6">
-                    <div className="flex items-end justify-between mb-12">
-                        <h2 className="text-3xl font-bold tracking-tight">Selected Work</h2>
-                        <span className="text-zinc-500 text-sm hidden md:block">2023 — 2025</span>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
-                        {PROJECTS.map((project) => (
-                        <div 
-                            key={project.id} 
-                            className="group cursor-pointer"
-                            onClick={() => setSelectedProject(project)}
-                        >
-                            <div className="relative overflow-hidden aspect-[4/3] bg-zinc-900 rounded-sm mb-6">
-                            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
-                            
-                            {project.isVideo && (
-                                <div className="absolute top-4 right-4 z-20 bg-black/50 backdrop-blur-md p-2 rounded-full text-white">
-                                <Play className="w-4 h-4 fill-white" />
-                                </div>
-                            )}
-
-                            <img 
-                                src={project.image} 
-                                alt={project.title}
-                                className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-out grayscale group-hover:grayscale-0"
-                            />
-                            
-                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-                                <div className="bg-white text-black px-4 py-2 text-sm font-semibold rounded-full flex items-center gap-2">
-                                    View Case <ArrowUpRight className="w-4 h-4" />
-                                </div>
-                            </div>
-                            </div>
-
-                            <div className="flex justify-between items-start border-t border-zinc-900 pt-4">
-                            <div>
-                                <h3 className="text-xl font-bold text-white mb-1 group-hover:text-zinc-400 transition-colors">{project.title}</h3>
-                                <p className="text-zinc-500 text-sm">{project.category}</p>
-                            </div>
-                            <span className="text-zinc-600 text-sm font-mono">{project.year}</span>
-                            </div>
-                        </div>
-                        ))}
-                    </div>
-                    </div>
-                </section>
-
-                {/* MOTION / VIDEO REEL SECTION */}
-                <section id="motion" className="py-20 bg-zinc-900">
-                    <div className="max-w-7xl mx-auto px-6">
-                    <div className="flex flex-col md:flex-row justify-between mb-12">
-                        <div>
-                        <h2 className="text-3xl font-bold tracking-tight mb-2">Motion & Reels</h2>
-                        <p className="text-zinc-400">Campaigns that move.</p>
-                        </div>
-                        <button className="text-white border-b border-white pb-1 hover:text-zinc-400 hover:border-zinc-400 transition-colors mt-4 md:mt-0 self-start">
-                        See All Motion Work
-                        </button>
-                    </div>
-
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {[1, 2, 3, 4].map((item) => (
-                        <div key={item} className="relative aspect-[9/16] bg-black group cursor-pointer overflow-hidden rounded-sm border border-zinc-800 hover:border-zinc-600 transition-colors">
-                            <img 
-                                src={`https://images.unsplash.com/photo-${item === 1 ? '1611162617474-5b21e879e113' : item === 2 ? '1536240478700-b869070f9279' : item === 3 ? '1531297461368-08ad8d475b0b' : '1550745165-9bc0b252726f'}?q=80&w=600&auto=format`} 
-                                className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500"
-                                alt="Reel thumbnail"
-                            />
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform">
-                                <Play className="w-5 h-5 fill-white text-white" />
-                                </div>
-                            </div>
-                            <div className="absolute bottom-4 left-4">
-                                <p className="text-xs font-bold uppercase tracking-widest text-white">Client {item}</p>
-                            </div>
-                        </div>
-                        ))}
-                    </div>
-                    </div>
-                </section>
-
-                {/* ABOUT & SKILLS */}
-                <section id="about" className="py-20 md:py-32">
-                    <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
-                        <div>
-                        <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-8">About Me</h2>
-                        <div className="text-2xl md:text-3xl leading-tight font-medium space-y-8">
-                            <p>
-                            I bridge the gap between traditional design principles and the modern speed of AI automation.
-                            </p>
-                            <p className="text-zinc-400">
-                            With over 3 years of experience in professional design environments, I have specialized in adapting quickly to generative AI tools. I use technology not to replace creativity, but to execute high-quality, complex visual concepts with precision and efficiency.
-                            </p>
-                            <p className="text-zinc-400">
-                            Currently based in Istanbul, I am focused on producing effective, forward-thinking visual systems for brands that demand quality at speed.
-                            </p>
-                        </div>
-                        </div>
-
-                        <div>
-                        <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-8">Services</h2>
-                        <div className="grid gap-6">
-                            {SKILLS.map((skill, index) => (
-                            <div key={index} className="flex items-start gap-4 p-4 border border-zinc-800 rounded-sm hover:bg-zinc-900 transition-colors group">
-                                <div className="text-zinc-500 group-hover:text-white transition-colors mt-1">
-                                    {skill.icon}
-                                </div>
-                                <div>
-                                    <h3 className="text-lg font-bold text-white">{skill.name}</h3>
-                                    <p className="text-sm text-zinc-500">{skill.desc}</p>
-                                </div>
-                            </div>
-                            ))}
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </section>
-
-                {/* CONTACT */}
-                <section id="contact" className="py-20 bg-white text-black">
-                    <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-                        <div>
-                        <h2 className="text-6xl md:text-8xl font-bold tracking-tighter mb-8">
-                            Let's work<br/>together.
-                        </h2>
-                        <p className="text-lg text-zinc-600 max-w-sm mb-8">
-                            Have a project in mind? Reach out and let's discuss how we can elevate your brand.
-                        </p>
-                        <div className="flex gap-4">
-                            <a href="#" className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors">
-                                <Mail size={24} />
-                            </a>
-                            <a href="#" className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors">
-                                <Linkedin size={24} />
-                            </a>
-                            <a href="#" className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors">
-                                <Instagram size={24} />
-                            </a>
-                        </div>
-                        </div>
-
-                        <form className="space-y-6 md:pt-4">
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold uppercase tracking-wide">Name</label>
-                            <input type="text" className="w-full bg-transparent border-b border-zinc-300 py-4 text-xl focus:outline-none focus:border-black transition-colors rounded-none placeholder:text-zinc-300" placeholder="Jane Doe" />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold uppercase tracking-wide">Email</label>
-                            <input type="email" className="w-full bg-transparent border-b border-zinc-300 py-4 text-xl focus:outline-none focus:border-black transition-colors rounded-none placeholder:text-zinc-300" placeholder="jane@example.com" />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold uppercase tracking-wide">Project Details</label>
-                            <textarea rows={4} className="w-full bg-transparent border-b border-zinc-300 py-4 text-xl focus:outline-none focus:border-black transition-colors rounded-none placeholder:text-zinc-300 resize-none" placeholder="Tell me about your timeline and goals..." />
-                        </div>
-                        <button type="button" className="mt-8 px-8 py-4 bg-black text-white font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors rounded-sm w-full md:w-auto">
-                            Send Request
-                        </button>
-                        </form>
-                    </div>
-
-                    <div className="border-t border-zinc-200 mt-20 pt-8 flex flex-col md:flex-row justify-between text-sm text-zinc-500">
-                        <p>&copy; 2024 Sedat Karadayan. All Rights Reserved.</p>
-                        <div className="flex gap-6 mt-4 md:mt-0">
-                        <span>Istanbul, TR</span>
-                        <span>EST 14:00</span>
-                        </div>
-                    </div>
-                    </div>
-                </section>
-
-                {/* Project Detail Overlay */}
-                {selectedProject && (
-                    <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
-                )}
+                <div className="space-y-8">
+                  <div className="border-t border-zinc-800 pt-6">
+                    <h4 className="text-white font-medium mb-2">Role</h4>
+                    <p className="text-zinc-400">{project.role}</p>
+                  </div>
+                  <div className="border-t border-zinc-800 pt-6">
+                    <h4 className="text-white font-medium mb-2">Client</h4>
+                    <p className="text-zinc-400">{project.client}</p>
+                  </div>
+                  <div className="border-t border-zinc-800 pt-6">
+                    <h4 className="text-white font-medium mb-2">Tools</h4>
+                    <ul className="text-zinc-400 space-y-1">
+                      {project.tools.map(tool => <li key={tool}>{tool}</li>)}
+                    </ul>
+                  </div>
                 </div>
-            );
-        }
+              </div>
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+              <div className="flex justify-center pt-10 border-t border-zinc-800">
+                <button
+                  onClick={onClose}
+                  className="text-white hover:text-zinc-400 transition-colors uppercase tracking-widest text-sm font-semibold"
+                >
+                  Close Project
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const ReelModal = ({ reel, onClose }) => {
+      if (!reel) return null;
+
+      const hasVideo = Boolean(reel.src);
+
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm animate-in fade-in duration-300">
+          <button
+            onClick={onClose}
+            className="absolute top-6 right-6 p-2 text-white/50 hover:text-white transition-colors z-50"
+            aria-label="Close reel"
+          >
+            <X className="w-8 h-8" />
+          </button>
+
+          <div className="w-full max-w-md mx-auto px-6">
+            <div className="bg-zinc-900 rounded-sm overflow-hidden border border-zinc-800">
+              {hasVideo ? (
+                <video
+                  src={reel.src}
+                  controls
+                  autoPlay
+                  playsInline
+                  className="w-full h-auto"
+                />
+              ) : (
+                <div className="aspect-[9/16] flex items-center justify-center text-zinc-400">
+                  Video path missing
+                </div>
+              )}
+
+              <div className="p-4 border-t border-zinc-800">
+                <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Reel</p>
+                <p className="text-white font-semibold">{reel.title}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const Navbar = () => (
+      <nav className="fixed top-0 left-0 w-full z-40 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/50">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="text-white font-bold text-xl tracking-tighter">SEDAT KARADAYAN</div>
+          <div className="hidden md:flex items-center gap-8">
+            <a href="#work" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Work</a>
+            <a href="#motion" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Motion</a>
+            <a href="#about" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">About</a>
+            <a href="#contact" className="px-5 py-2 bg-white text-black text-sm font-semibold hover:bg-zinc-200 transition-colors rounded-sm">
+              Let's Talk
+            </a>
+          </div>
+        </div>
+      </nav>
+    );
+
+    function App() {
+      const [selectedProject, setSelectedProject] = useState(null);
+      const [selectedReel, setSelectedReel] = useState(null);
+
+      useEffect(() => {
+        if (selectedProject || selectedReel) document.body.style.overflow = 'hidden';
+        else document.body.style.overflow = 'unset';
+      }, [selectedProject, selectedReel]);
+
+      return (
+        <div className="min-h-screen bg-zinc-950 text-white selection:bg-white selection:text-black">
+          <Navbar />
+
+          {/* HERO */}
+          <section className="pt-40 pb-20 md:pt-60 md:pb-32 px-6">
+            <div className="max-w-7xl mx-auto">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.9] mb-8">
+                Graphic Designer <br/>
+                <span className="text-zinc-500">focused on</span> bold visuals, <br/>
+                motion <span className="text-zinc-500">&</span> brand systems.
+              </h1>
+
+              <div className="flex flex-col md:flex-row gap-8 md:items-end justify-between max-w-4xl mt-12 md:mt-24">
+                <p className="text-zinc-400 text-lg md:text-xl max-w-md leading-relaxed">
+                  I help brands and founders turn complex ideas into undeniable visual realities.
+                  Based in Istanbul, working globally.
+                </p>
+
+                <div className="flex gap-4">
+                  <a href="#work" className="group flex items-center gap-2 bg-white text-black px-6 py-3 font-semibold rounded-sm hover:bg-zinc-200 transition-all">
+                    View Projects
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                  <a href="#contact" className="flex items-center gap-2 px-6 py-3 font-semibold border border-zinc-800 text-white hover:border-white transition-colors rounded-sm">
+                    Contact
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* SELECTED WORK */}
+          <section id="work" className="py-20 border-t border-zinc-900">
+            <div className="max-w-7xl mx-auto px-6">
+              <div className="flex items-end justify-between mb-12">
+                <h2 className="text-3xl font-bold tracking-tight">Selected Work</h2>
+                <span className="text-zinc-500 text-sm hidden md:block">2023 — 2025</span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
+                {PROJECTS.map((project) => (
+                  <div
+                    key={project.id}
+                    className="group cursor-pointer"
+                    onClick={() => setSelectedProject(project)}
+                  >
+                    <div className="relative overflow-hidden aspect-[4/3] bg-zinc-900 rounded-sm mb-6">
+                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
+
+                      {project.isVideo && (
+                        <div className="absolute top-4 right-4 z-20 bg-black/50 backdrop-blur-md p-2 rounded-full text-white">
+                          <Play className="w-4 h-4 fill-white" />
+                        </div>
+                      )}
+
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-out grayscale group-hover:grayscale-0"
+                      />
+
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                        <div className="bg-white text-black px-4 py-2 text-sm font-semibold rounded-full flex items-center gap-2">
+                          View Case <ArrowUpRight className="w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between items-start border-t border-zinc-900 pt-4">
+                      <div>
+                        <h3 className="text-xl font-bold text-white mb-1 group-hover:text-zinc-400 transition-colors">{project.title}</h3>
+                        <p className="text-zinc-500 text-sm">{project.category}</p>
+                      </div>
+                      <span className="text-zinc-600 text-sm font-mono">{project.year}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* MOTION / REELS */}
+          <section id="motion" className="py-20 bg-zinc-900">
+            <div className="max-w-7xl mx-auto px-6">
+              <div className="flex flex-col md:flex-row justify-between mb-12">
+                <div>
+                  <h2 className="text-3xl font-bold tracking-tight mb-2">Motion & Reels</h2>
+                  <p className="text-zinc-400">Campaigns that move.</p>
+                </div>
+                <button className="text-white border-b border-white pb-1 hover:text-zinc-400 hover:border-zinc-400 transition-colors mt-4 md:mt-0 self-start">
+                  See All Motion Work
+                </button>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {REELS.map((reel) => (
+                  <div
+                    key={reel.id}
+                    className="relative aspect-[9/16] bg-black group cursor-pointer overflow-hidden rounded-sm border border-zinc-800 hover:border-zinc-600 transition-colors"
+                    onClick={() => setSelectedReel(reel)}
+                  >
+                    <img
+                      src={reel.thumb}
+                      className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500"
+                      alt={reel.title}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform">
+                        <Play className="w-5 h-5 fill-white text-white" />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-4 left-4">
+                      <p className="text-xs font-bold uppercase tracking-widest text-white">{reel.title}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ABOUT & SKILLS */}
+          <section id="about" className="py-20 md:py-32">
+            <div className="max-w-7xl mx-auto px-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
+                <div>
+                  <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-8">About Me</h2>
+                  <div className="text-2xl md:text-3xl leading-tight font-medium space-y-8">
+                    <p>I bridge the gap between traditional design principles and the modern speed of AI automation.</p>
+                    <p className="text-zinc-400">
+                      With over 3 years of experience in professional design environments, I have specialized in adapting quickly to generative AI tools.
+                      I use technology not to replace creativity, but to execute high-quality, complex visual concepts with precision and efficiency.
+                    </p>
+                    <p className="text-zinc-400">
+                      Currently based in Istanbul, I am focused on producing effective, forward-thinking visual systems for brands that demand quality at speed.
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-8">Services</h2>
+                  <div className="grid gap-6">
+                    {SKILLS.map((skill, index) => (
+                      <div key={index} className="flex items-start gap-4 p-4 border border-zinc-800 rounded-sm hover:bg-zinc-900 transition-colors group">
+                        <div className="text-zinc-500 group-hover:text-white transition-colors mt-1">{skill.icon}</div>
+                        <div>
+                          <h3 className="text-lg font-bold text-white">{skill.name}</h3>
+                          <p className="text-sm text-zinc-500">{skill.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          {/* CONTACT */}
+          <section id="contact" className="py-20 bg-white text-black">
+            <div className="max-w-7xl mx-auto px-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <div>
+                  <h2 className="text-6xl md:text-8xl font-bold tracking-tighter mb-8">
+                    Let's work<br/>together.
+                  </h2>
+                  <p className="text-lg text-zinc-600 max-w-sm mb-8">
+                    Have a project in mind? Reach out and let's discuss how we can elevate your brand.
+                  </p>
+                  <div className="flex gap-4">
+                    <a href="#" className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors" aria-label="Email">
+                      <Mail className="w-6 h-6" />
+                    </a>
+                    <a href="#" className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors" aria-label="LinkedIn">
+                      <Linkedin className="w-6 h-6" />
+                    </a>
+                    <a href="#" className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors" aria-label="Instagram">
+                      <Instagram className="w-6 h-6" />
+                    </a>
+                  </div>
+                </div>
+
+                <form className="space-y-6 md:pt-4" onSubmit={(e) => e.preventDefault()}>
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold uppercase tracking-wide">Name</label>
+                    <input type="text" className="w-full bg-transparent border-b border-zinc-300 py-4 text-xl focus:outline-none focus:border-black transition-colors rounded-none placeholder:text-zinc-300" placeholder="Jane Doe" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold uppercase tracking-wide">Email</label>
+                    <input type="email" className="w-full bg-transparent border-b border-zinc-300 py-4 text-xl focus:outline-none focus:border-black transition-colors rounded-none placeholder:text-zinc-300" placeholder="jane@example.com" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold uppercase tracking-wide">Project Details</label>
+                    <textarea rows="4" className="w-full bg-transparent border-b border-zinc-300 py-4 text-xl focus:outline-none focus:border-black transition-colors rounded-none placeholder:text-zinc-300 resize-none" placeholder="Tell me about your timeline and goals..." />
+                  </div>
+                  <button type="submit" className="mt-8 px-8 py-4 bg-black text-white font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors rounded-sm w-full md:w-auto">
+                    Send Request
+                  </button>
+                </form>
+              </div>
+
+              <div className="border-t border-zinc-200 mt-20 pt-8 flex flex-col md:flex-row justify-between text-sm text-zinc-500">
+                <p>&copy; 2024 Sedat Karadayan. All Rights Reserved.</p>
+                <div className="flex gap-6 mt-4 md:mt-0">
+                  <span>Istanbul, TR</span>
+                  <span>EST 14:00</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* MODALS */}
+          {selectedProject && (
+            <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+          )}
+
+          {selectedReel && (
+            <ReelModal reel={selectedReel} onClose={() => setSelectedReel(null)} />
+          )}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
 </body>
 </html>
