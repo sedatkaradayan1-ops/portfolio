@@ -161,38 +161,39 @@
       { name: "Digital", icon: <Monitor className="w-5 h-5" />, desc: "Web Design, Social Assets" },
     ];
 
-    // --- REELS (BURAYI DOLDURACAKSIN) ---
-    // NOT: Dosya adında boşluk varsa %20 ile yazmak zorundasın.
-    // En iyisi: dosyayı assets/baby-plus-car-seat.mp4 diye yeniden adlandır.
-    const REELS = [
-      {
-        id: 1,
-        title: "BABY PLUS CAR SEAT",
-        thumb: "assets/baby-plus-car-seat.png",   // karttaki görüntü
-        poster: "assets/baby-plus-car-seat.png", // modalda video açılmadan görünen kapak
-        src: "assets/baby-plus-car-seat.mp4"
-      },
-      {
-        id: 2,
-        title: "BABY PLUS BATH SEAT",
-        thumb: "/assets/baby-plus-bath-seat.png",
-        poster: "/assets/baby-plus-bath-seat.png",
-        src: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770027776/Baby_Plus_Bath_Seat_lsn9a9.mp4"
-      },
-      {
-        id: 3,
-        title: "BABY PLUS FOLDABLE BATH TUB",
-        thumb: "/assets/baby-plus-foldablebathtub.png",
-        poster: "/assets/baby-plus-foldablebathtub.png",
-        src: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770028167/BabyPlus_FoldableBathtub_Premium_ProductVideo_gcyu1c.mp4"
-      },
-      {
-        id: 4,
-        title: "Client 4",
-        thumb: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format",
-        src: "" // sonra doldur
-      }
-    ];
+    // --- REELS (REVIZE) ---
+// Kural: Kapaklar local public/assets -> "/assets/..."
+// Videolar Cloudinary -> tam URL
+const REELS = [
+  {
+    id: 1,
+    title: "BABY PLUS CAR SEAT",
+    thumb: "/assets/baby-plus-car-seat.png",
+    poster: "/assets/baby-plus-car-seat.png",
+    src: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770027776/Baby_Plus_Car_Seat_xxxxx.mp4"
+  },
+  {
+    id: 2,
+    title: "BABY PLUS BATH SEAT",
+    thumb: "/assets/baby-plus-bath-seat.png",
+    poster: "/assets/baby-plus-bath-seat.png",
+    src: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770027776/Baby_Plus_Bath_Seat_lsn9a9.mp4"
+  },
+  {
+    id: 3,
+    title: "BABY PLUS FOLDABLE BATH TUB",
+    thumb: "/assets/baby-plus-foldablebathtub.png",
+    poster: "/assets/baby-plus-foldablebathtub.png",
+    src: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770028167/BabyPlus_FoldableBathtub_Premium_ProductVideo_gcyu1c.mp4"
+  },
+  {
+    id: 4,
+    title: "CLIENT 4",
+    thumb: "/assets/client-4.png",
+    poster: "/assets/client-4.png",
+    src: "https://res.cloudinary.com/dxymnldd1/video/upload/v17700xxxxx/client-4.mp4"
+  }
+];
 
     // --- COMPONENTS ---
     const ProjectModal = ({ project, onClose }) => {
