@@ -58,142 +58,182 @@
       </svg>
     );
 
-    const ArrowRight = ({ className }) => <IconWrapper className={className}><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></IconWrapper>;
-    const X = ({ className }) => <IconWrapper className={className}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></IconWrapper>;
-    const Play = ({ className }) => <IconWrapper className={className}><polygon points="5 3 19 12 5 21 5 3"/></IconWrapper>;
- <div className="flex gap-4">
-  <a
-    href="mailto:sedatkaradayan1@gmail.com"
-    className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors"
-    aria-label="Email"
-  >
-    <Mail className="w-6 h-6" />
-  </a>
+    const ArrowRight = ({ className }) => (
+      <IconWrapper className={className}>
+        <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+      </IconWrapper>
+    );
 
-  <a
-    href="https://www.linkedin.com/in/sedat-karadayan/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors"
-    aria-label="LinkedIn"
-  >
-    <Linkedin className="w-6 h-6" />
-  </a>
+    const X = ({ className }) => (
+      <IconWrapper className={className}>
+        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+      </IconWrapper>
+    );
 
-  <a
-    href="https://www.instagram.com/sdtkrdyn"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors"
-    aria-label="Instagram"
-  >
-    <Instagram className="w-6 h-6" />
-  </a>
-</div>
-    const Monitor = ({ className }) => <IconWrapper className={className}><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></IconWrapper>;
-    const Aperture = ({ className }) => <IconWrapper className={className}><circle cx="12" cy="12" r="10"/><path d="m14.31 8 5.74 9.94"/><path d="M9.69 8h11.48"/><path d="m7.38 12 5.74-9.94"/><path d="M9.69 16 3.95 6.06"/><path d="M14.31 16H2.83"/><path d="m16.62 12-5.74 9.94"/></IconWrapper>;
-    const Layers = ({ className }) => <IconWrapper className={className}><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></IconWrapper>;
-    const Zap = ({ className }) => <IconWrapper className={className}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></IconWrapper>;
-    const ArrowUpRight = ({ className }) => <IconWrapper className={className}><path d="M7 7h10v10"/><path d="M7 17 17 7"/></IconWrapper>;
+    const Play = ({ className }) => (
+      <IconWrapper className={className}>
+        <polygon points="5 3 19 12 5 21 5 3"/>
+      </IconWrapper>
+    );
+
+    // ✅ CONTACT ICONS (Mail / Linkedin / Instagram)
+    const Mail = ({ className }) => (
+      <IconWrapper className={className}>
+        <rect width="20" height="16" x="2" y="4" rx="2"/>
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+      </IconWrapper>
+    );
+
+    const Instagram = ({ className }) => (
+      <IconWrapper className={className}>
+        <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+      </IconWrapper>
+    );
+
+    const Linkedin = ({ className }) => (
+      <IconWrapper className={className}>
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+        <rect width="4" height="12" x="2" y="9"/>
+        <circle cx="4" cy="4" r="2"/>
+      </IconWrapper>
+    );
+
+    const Monitor = ({ className }) => (
+      <IconWrapper className={className}>
+        <rect width="20" height="14" x="2" y="3" rx="2"/>
+        <line x1="8" x2="16" y1="21" y2="21"/>
+        <line x1="12" x2="12" y1="17" y2="21"/>
+      </IconWrapper>
+    );
+
+    const Aperture = ({ className }) => (
+      <IconWrapper className={className}>
+        <circle cx="12" cy="12" r="10"/>
+        <path d="m14.31 8 5.74 9.94"/>
+        <path d="M9.69 8h11.48"/>
+        <path d="m7.38 12 5.74-9.94"/>
+        <path d="M9.69 16 3.95 6.06"/>
+        <path d="M14.31 16H2.83"/>
+        <path d="m16.62 12-5.74 9.94"/>
+      </IconWrapper>
+    );
+
+    const Layers = ({ className }) => (
+      <IconWrapper className={className}>
+        <path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/>
+        <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/>
+        <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>
+      </IconWrapper>
+    );
+
+    const Zap = ({ className }) => (
+      <IconWrapper className={className}>
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+      </IconWrapper>
+    );
+
+    const ArrowUpRight = ({ className }) => (
+      <IconWrapper className={className}>
+        <path d="M7 7h10v10"/>
+        <path d="M7 17 17 7"/>
+      </IconWrapper>
+    );
 
     // --- DATA ---
- const PROJECTS = [
-  {
-    id: 1,
-    title: "ebebek Summer Weekends Store Event Designs",
-    category: "Retail Event Design",
-    year: "2025",
-    client: "ebebek",
-    description:
-      "This project was created for ebebek’s Summer Weekends in-store event series, designed to enhance the physical retail experience and attract families through engaging visual touchpoints.",
-    role: "Graphic Designer",
-    tools: ["Illustrator", "Photoshop", "After Effects"],
-    image: "./assets/summer-weekends-cover.png",
-    gallery: [
-      "./assets/sw-social-media-posts.png",
-      "./assets/sm-magaza-ici-tasarimlar.png"
-    ],
-    video: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770094975/SW-adbike_aac8ui.mp4"
-  },
-
-{
-  id: 2,
-  title: "ebebek UK – Official Brand Introduction Video",
-  category: "Brand Film / Motion Design",
-  year: "2025",
-  client: "ebebek UK",
-  description:
-    "This official brand introduction video was created for ebebek’s entry into the United Kingdom market. The project focuses on presenting the brand’s identity, values, and long-term vision through a refined editorial structure and motion-driven storytelling. The scope covered video editing, editorial sequencing, and graphic design execution, aiming to establish a strong and trustworthy brand presence in the UK retail landscape.",
-  role: "Motion Designer & Editor",
-  tools: ["After Effects", "Premiere Pro", "Photoshop"],
-  image: "./assets/ebebe-uk-promotion-video-cover.png",
-  isVideo: true,
-  gallery: [],
-  video: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770106940/ebebe-uk-promotion-video_2_fmjrav.mp4"
-  },
-
-  {
-    id: 3,
-    title: "Vogue / Future",
-    category: "AI Visuals",
-    year: "2024",
-    client: "Editorial",
-    description:
-      "An experimental editorial series exploring the intersection of haute couture and synthetic biology.",
-    role: "Art Director",
-    tools: ["Midjourney", "Photoshop", "Lightroom"],
-    image:
-      "https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=2000&auto=format",
-    gallery: [
-      "https://images.unsplash.com/photo-1580974852861-c381510bc98a?q=80&w=1000&auto=format"
-    ]
-  },
-
-  {
-    id: 4,
-    title: "Mono Coffee",
-    category: "Social Media Kit",
-    year: "2023",
-    client: "Mono Roasters",
-    description:
-      "A modular social media template system for a high-end coffee roaster.",
-    role: "Visual Designer",
-    tools: ["Figma", "Canva"],
-    image:
-      "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2000&auto=format",
-    gallery: [
-      "https://images.unsplash.com/photo-1507133750069-bef72f3a2b17?q=80&w=1000&auto=format"
-    ]
-  },
-
-  {
-    id: 5,
-    title: "Cyber Structure",
-    category: "3D Art",
-    year: "2024",
-    client: "Personal",
-    description: "Exploration of brutalist architecture in a digital space.",
-    role: "3D Artist",
-    tools: ["Blender", "Octane"],
-    image:
-      "https://images.unsplash.com/photo-1487800940032-1cf21118ccde?q=80&w=2000&auto=format",
-    gallery: []
-  },
-
-  {
-    id: 6,
-    title: "Echo",
-    category: "Web Design",
-    year: "2023",
-    client: "Tech Startup",
-    description: "UI/UX for a sound analysis platform.",
-    role: "Product Designer",
-    tools: ["Figma", "React"],
-    image:
-      "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format",
-    gallery: []
-  }
-];
+    const PROJECTS = [
+      {
+        id: 1,
+        title: "ebebek Summer Weekends Store Event Designs",
+        category: "Retail Event Design",
+        year: "2025",
+        client: "ebebek",
+        description:
+          "This project was created for ebebek’s Summer Weekends in-store event series, designed to enhance the physical retail experience and attract families through engaging visual touchpoints.",
+        role: "Graphic Designer",
+        tools: ["Illustrator", "Photoshop", "After Effects"],
+        image: "./assets/summer-weekends-cover.png",
+        gallery: [
+          "./assets/sw-social-media-posts.png",
+          "./assets/sm-magaza-ici-tasarimlar.png"
+        ],
+        video: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770094975/SW-adbike_aac8ui.mp4"
+      },
+      {
+        id: 2,
+        title: "ebebek UK – Official Brand Introduction Video",
+        category: "Brand Film / Motion Design",
+        year: "2025",
+        client: "ebebek UK",
+        description:
+          "This official brand introduction video was created for ebebek’s entry into the United Kingdom market. The project focuses on presenting the brand’s identity, values, and long-term vision through a refined editorial structure and motion-driven storytelling. The scope covered video editing, editorial sequencing, and graphic design execution, aiming to establish a strong and trustworthy brand presence in the UK retail landscape.",
+        role: "Motion Designer & Editor",
+        tools: ["After Effects", "Premiere Pro", "Photoshop"],
+        image: "./assets/ebebe-uk-promotion-video-cover.png",
+        isVideo: true,
+        gallery: [],
+        video: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770106940/ebebe-uk-promotion-video_2_fmjrav.mp4"
+      },
+      {
+        id: 3,
+        title: "Vogue / Future",
+        category: "AI Visuals",
+        year: "2024",
+        client: "Editorial",
+        description:
+          "An experimental editorial series exploring the intersection of haute couture and synthetic biology.",
+        role: "Art Director",
+        tools: ["Midjourney", "Photoshop", "Lightroom"],
+        image:
+          "https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=2000&auto=format",
+        gallery: [
+          "https://images.unsplash.com/photo-1580974852861-c381510bc98a?q=80&w=1000&auto=format"
+        ]
+      },
+      {
+        id: 4,
+        title: "Mono Coffee",
+        category: "Social Media Kit",
+        year: "2023",
+        client: "Mono Roasters",
+        description:
+          "A modular social media template system for a high-end coffee roaster.",
+        role: "Visual Designer",
+        tools: ["Figma", "Canva"],
+        image:
+          "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2000&auto=format",
+        gallery: [
+          "https://images.unsplash.com/photo-1507133750069-bef72f3a2b17?q=80&w=1000&auto=format"
+        ]
+      },
+      {
+        id: 5,
+        title: "Cyber Structure",
+        category: "3D Art",
+        year: "2024",
+        client: "Personal",
+        description: "Exploration of brutalist architecture in a digital space.",
+        role: "3D Artist",
+        tools: ["Blender", "Octane"],
+        image:
+          "https://images.unsplash.com/photo-1487800940032-1cf21118ccde?q=80&w=2000&auto=format",
+        gallery: []
+      },
+      {
+        id: 6,
+        title: "Echo",
+        category: "Web Design",
+        year: "2023",
+        client: "Tech Startup",
+        description: "UI/UX for a sound analysis platform.",
+        role: "Product Designer",
+        tools: ["Figma", "React"],
+        image:
+          "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format",
+        gallery: []
+      }
+    ];
 
     const SKILLS = [
       { name: "Graphic Design", icon: <Layers className="w-5 h-5" />, desc: "Layout, Typography, Print" },
@@ -277,27 +317,27 @@
                     <p className="text-zinc-400 leading-relaxed text-lg">{project.description}</p>
                   </div>
 
-               <div className="grid gap-6 mt-12">
-  {project.gallery.map((img, index) => (
-    <img
-      key={index}
-      src={img}
-      alt=""
-      className="w-full h-auto rounded-sm grayscale hover:grayscale-0 transition-all duration-500"
-    />
-  ))}
+                  <div className="grid gap-6 mt-12">
+                    {project.gallery.map((img, index) => (
+                      <img
+                        key={index}
+                        src={img}
+                        alt=""
+                        className="w-full h-auto rounded-sm grayscale hover:grayscale-0 transition-all duration-500"
+                      />
+                    ))}
 
-  {project.video && (
-    <div className="w-full overflow-hidden rounded-sm border border-zinc-800 bg-black">
-      <video
-        src={project.video}
-        controls
-        playsInline
-        className="w-full h-auto"
-      />
-    </div>
-  )}
-</div>
+                    {project.video && (
+                      <div className="w-full overflow-hidden rounded-sm border border-zinc-800 bg-black">
+                        <video
+                          src={project.video}
+                          controls
+                          playsInline
+                          className="w-full h-auto"
+                        />
+                      </div>
+                    )}
+                  </div>
 
                 </div>
 
@@ -419,7 +459,6 @@
       const scrollerRef = useRef(null);
       const [active, setActive] = useState(0);
 
-      // Determine which item is closest to center of viewport inside scroller
       useEffect(() => {
         const el = scrollerRef.current;
         if (!el) return;
@@ -462,7 +501,6 @@
         };
       }, [reels.length]);
 
-      // helpers
       const cardBase =
         "relative aspect-[9/16] bg-black overflow-hidden border border-zinc-800 transition-all duration-300 will-change-transform";
 
@@ -479,7 +517,6 @@
               </button>
             </div>
 
-            {/* MOBILE: hero carousel with peeking sides */}
             <div className="md:hidden">
               <div
                 ref={scrollerRef}
@@ -505,32 +542,23 @@
                       aria-label={reel.title}
                     >
                       <div className={`${cardBase} rounded-3xl`}>
-                        {/* image */}
                         <img
                           src={reel.thumb}
                           className={`w-full h-full object-cover ${opacity} ${blur}`}
                           alt={reel.title}
                           loading="lazy"
                         />
-
-                        {/* vignette overlay to feel premium */}
                         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/55" />
-
-                        {/* play button */}
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="w-14 h-14 rounded-full border border-white/30 flex items-center justify-center backdrop-blur-sm bg-black/20">
                             <Play className="w-6 h-6 fill-white text-white" />
                           </div>
                         </div>
-
-                        {/* title */}
                         <div className="absolute bottom-5 left-5 right-5">
                           <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/90 text-left">
                             {reel.title}
                           </p>
                         </div>
-
-                        {/* subtle inner stroke */}
                         <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-white/10" />
                       </div>
                     </button>
@@ -538,7 +566,6 @@
                 })}
               </div>
 
-              {/* tiny hint dots (optional but helps) */}
               <div className="mt-5 flex items-center justify-center gap-2">
                 {reels.map((_, i) => (
                   <div
@@ -551,7 +578,6 @@
               </div>
             </div>
 
-            {/* DESKTOP: keep original grid */}
             <div className="hidden md:grid grid-cols-2 md:grid-cols-4 gap-4">
               {reels.map((reel) => (
                 <div
@@ -648,11 +674,10 @@
                       )}
 
                       <img
-                         src={project.image}
-                         alt={project.title}
-                         className="object-cover w-full h-full transform group-hover:scale-105 transition-all duration-700 ease-out opacity-60 brightness-75 group-hover:opacity-100 group-hover:brightness-100"      
-                     />
-
+                        src={project.image}
+                        alt={project.title}
+                        className="object-cover w-full h-full transform group-hover:scale-105 transition-all duration-700 ease-out opacity-60 brightness-75 group-hover:opacity-100 group-hover:brightness-100"
+                      />
 
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
                         <div className="bg-white text-black px-4 py-2 text-sm font-semibold rounded-full flex items-center gap-2">
@@ -674,7 +699,6 @@
             </div>
           </section>
 
-          {/* MOTION (mobile carousel + desktop grid unchanged) */}
           <MotionSection reels={REELS} onSelectReel={setSelectedReel} />
 
           {/* ABOUT & SKILLS */}
@@ -725,14 +749,34 @@
                   <p className="text-lg text-zinc-600 max-w-sm mb-8">
                     Have a project in mind? Reach out and let's discuss how we can elevate your brand.
                   </p>
+
+                  {/* ✅ clickable icons */}
                   <div className="flex gap-4">
-                    <a href="#" className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors" aria-label="Email">
+                    <a
+                      href="mailto:sedatkaradayan1@gmail.com"
+                      className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors"
+                      aria-label="Email"
+                    >
                       <Mail className="w-6 h-6" />
                     </a>
-                    <a href="#" className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors" aria-label="LinkedIn">
+
+                    <a
+                      href="https://www.linkedin.com/in/sedat-karadayan/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors"
+                      aria-label="LinkedIn"
+                    >
                       <Linkedin className="w-6 h-6" />
                     </a>
-                    <a href="#" className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors" aria-label="Instagram">
+
+                    <a
+                      href="https://www.instagram.com/sdtkrdyn"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 bg-black text-white rounded-full hover:bg-zinc-800 transition-colors"
+                      aria-label="Instagram"
+                    >
                       <Instagram className="w-6 h-6" />
                     </a>
                   </div>
