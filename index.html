@@ -73,18 +73,23 @@
     // --- DATA ---
     const PROJECTS = [
       {
-        id: 1,
-        title: "Apex FinTech",
-        category: "Branding & Identity",
-        year: "2024",
-        client: "Apex Financial",
-        description: "A complete rebrand for a Series B fintech startup moving from chaotic growth to established authority. We stripped away the playful tech tropes and built a visual system based on solidity and transparency.",
-        role: "Lead Designer",
-        tools: ["Illustrator", "Figma", "Blender"],
-        image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2700&auto=format&fit=crop",
-        gallery: [
-          "https://images.unsplash.com/photo-1550534791-2677533605ab?q=80&w=1000&auto=format",
-          "https://images.unsplash.com/photo-1634942537034-2531766767d1?q=80&w=1000&auto=format"
+       {
+  id: 1,
+  title: "ebebek Summer Weekends Store Event Designs",
+  category: "Retail Event Design",
+  year: "2025",
+  client: "ebebek",
+  description:
+    "This project was created for ebebek’s Summer Weekends in-store event series, designed to enhance the physical retail experience and attract families through engaging visual touchpoints. The scope included event visuals, activity calendars, in-store communication materials, and custom vehicle branding designs for candy floss, popcorn, and ice cream carts used during the events. All designs were developed with a strong focus on brand consistency, print production requirements, and real-world application within a retail environment, ensuring clear communication and a cohesive in-store experience.",
+  role: "Graphic Designer",
+  tools: ["Illustrator", "Photoshop", "After Effects"],
+  image: "./assets/summer-weekends-cover.png",
+  gallery: [
+    "./assets/sw-social-media-posts.png",
+    "./assets/sm-magaza-ici-tasarimlar.png"
+  ],
+  video: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770094975/SW-adbike_aac8ui.mp4"
+},
         ]
       },
       {
@@ -239,16 +244,28 @@
                     <p className="text-zinc-400 leading-relaxed text-lg">{project.description}</p>
                   </div>
 
-                  <div className="grid gap-6 mt-12">
-                    {project.gallery.map((img, index) => (
-                      <img
-                        key={index}
-                        src={img}
-                        alt=""
-                        className="w-full h-auto rounded-sm grayscale hover:grayscale-0 transition-all duration-500"
-                      />
-                    ))}
-                  </div>
+               <div className="grid gap-6 mt-12">
+  {project.gallery.map((img, index) => (
+    <img
+      key={index}
+      src={img}
+      alt=""
+      className="w-full h-auto rounded-sm grayscale hover:grayscale-0 transition-all duration-500"
+    />
+  ))}
+
+  {project.video && (
+    <div className="w-full overflow-hidden rounded-sm border border-zinc-800 bg-black">
+      <video
+        src={project.video}
+        controls
+        playsInline
+        className="w-full h-auto"
+      />
+    </div>
+  )}
+</div>
+
                 </div>
 
                 <div className="space-y-8">
