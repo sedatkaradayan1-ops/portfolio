@@ -227,23 +227,23 @@
           "https://images.unsplash.com/photo-1487800940032-1cf21118ccde?q=80&w=2000&auto=format",
         gallery: []
       },
-     {
-  id: 6,
-  title: "Blender Donut — 3D Modeling & Render Study",
-  category: "3D Art / Rendering",
-  year: "2025",
-  client: "Personal",
-  description:
-    "A focused Blender study exploring modeling, lighting, and render polish. Built as a complete mini-scene with clean composition, material work, and a short render animation output.",
-  role: "3D Artist",
-  tools: ["Blender, Premier Pro"],
-  image: "./assets/donut-cover.png",
-  gallery: [
-    "./assets/blender-donut-artwork1.png",
-    "./assets/blender-donut-artwork2.png"
-  ],
-  video: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770270957/3model-donut-video_cijyyg.mp4"
-}
+      {
+        id: 6,
+        title: "Blender Donut — 3D Modeling & Render Study",
+        category: "3D Art / Rendering",
+        year: "2025",
+        client: "Personal",
+        description:
+          "A focused Blender study exploring modeling, lighting, and render polish. Built as a complete mini-scene with clean composition, material work, and a short render animation output.",
+        role: "3D Artist",
+        tools: ["Blender", "Premiere Pro"],
+        image: "./assets/donut-cover.png",
+        gallery: [
+          "./assets/blender-donut-artwork1.png",
+          "./assets/blender-donut-artwork2.png"
+        ],
+        video: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770270957/3model-donut-video_cijyyg.mp4"
+      }
     ];
 
     const SKILLS = [
@@ -285,6 +285,138 @@
         src: "https://res.cloudinary.com/dxymnldd1/video/upload/v1770098453/Winter_Essential_Lakeside_Ekran_hh8xbs.mp4"
       }
     ];
+
+    // ✅ FORMSPREE CONTACT FORM (no redirect, inline success/error)
+    const ContactForm = () => {
+      const endpoint = "https://formspree.io/f/xdalngkg";
+
+      const [name, setName] = useState("");
+      const [email, setEmail] = useState("");
+      const [message, setMessage] = useState("");
+      const [status, setStatus] = useState("idle"); // idle | sending | success | error
+      const [errorMsg, setErrorMsg] = useState("");
+
+      const onSubmit = async (e) => {
+        e.preventDefault();
+        setStatus("sending");
+        setErrorMsg("");
+
+        try {
+          const formData = new FormData();
+          formData.append("name", name);
+          formData.append("email", email);
+          formData.append("message", message);
+          // Optional extras:
+          formData.append("_subject", "New Portfolio Contact Request");
+          formData.append("_replyto", email);
+
+          const res = await fetch(endpoint, {
+            method: "POST",
+            headers: { "Accept": "application/json" },
+            body: formData
+          });
+
+          if (res.ok) {
+            setStatus("success");
+            setName("");
+            setEmail("");
+            setMessage("");
+            return;
+          }
+
+          let payload = null;
+          try { payload = await res.json(); } catch (_) {}
+          setStatus("error");
+          setErrorMsg(payload?.errors?.[0]?.message || "Something went wrong. Please try again.");
+        } catch (err) {
+          setStatus("error");
+          setErrorMsg("Network error. Please try again.");
+        }
+      };
+
+      return (
+        <div>
+          {status === "success" ? (
+            <div className="border border-zinc-200 bg-white/60 backdrop-blur-sm rounded-sm p-6">
+              <p className="text-sm font-bold uppercase tracking-widest text-zinc-600 mb-3">
+                Message sent
+              </p>
+              <p className="text-xl font-semibold text-black leading-snug">
+                ✅ Got it. I’ll get back to you as soon as possible.
+              </p>
+              <p className="text-zinc-600 mt-3">
+                You can close this tab — I already received your message.
+              </p>
+              <button
+                type="button"
+                onClick={() => setStatus("idle")}
+                className="mt-6 px-6 py-3 bg-black text-white font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors rounded-sm"
+              >
+                Send another message
+              </button>
+            </div>
+          ) : (
+            <form className="space-y-6 md:pt-4" onSubmit={onSubmit}>
+              {/* Honeypot (spam) */}
+              <input type="text" name="_gotcha" className="hidden" tabIndex="-1" autoComplete="off" />
+
+              <div className="space-y-2">
+                <label className="text-sm font-bold uppercase tracking-wide">Name</label>
+                <input
+                  name="name"
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full bg-transparent border-b border-zinc-300 py-4 text-xl focus:outline-none focus:border-black transition-colors rounded-none placeholder:text-zinc-300"
+                  placeholder="Jane Doe"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-bold uppercase tracking-wide">Email</label>
+                <input
+                  name="email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-transparent border-b border-zinc-300 py-4 text-xl focus:outline-none focus:border-black transition-colors rounded-none placeholder:text-zinc-300"
+                  placeholder="jane@example.com"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-bold uppercase tracking-wide">Project Details</label>
+                <textarea
+                  name="message"
+                  rows="4"
+                  required
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className="w-full bg-transparent border-b border-zinc-300 py-4 text-xl focus:outline-none focus:border-black transition-colors rounded-none placeholder:text-zinc-300 resize-none"
+                  placeholder="Tell me about your timeline and goals..."
+                />
+              </div>
+
+              {status === "error" && (
+                <div className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-sm p-3">
+                  ❌ {errorMsg}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="mt-8 px-8 py-4 bg-black text-white font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors rounded-sm w-full md:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {status === "sending" ? "Sending..." : "Send Request"}
+              </button>
+            </form>
+          )}
+        </div>
+      );
+    };
 
     // --- COMPONENTS ---
     const ProjectModal = ({ project, onClose }) => {
@@ -329,7 +461,7 @@
                   </div>
 
                   <div className="grid gap-6 mt-12">
-                    {project.gallery.map((img, index) => (
+                    {(project.gallery || []).map((img, index) => (
                       <img
                         key={index}
                         src={img}
@@ -366,7 +498,7 @@
                   <div className="border-t border-zinc-800 pt-6">
                     <h4 className="text-white font-medium mb-2">Tools</h4>
                     <ul className="text-zinc-400 space-y-1">
-                      {project.tools.map(tool => <li key={tool}>{tool}</li>)}
+                      {(project.tools || []).map(tool => <li key={tool}>{tool}</li>)}
                     </ul>
                   </div>
                 </div>
@@ -639,12 +771,8 @@
       };
 
       const closeModalWithHistory = () => {
-        // If we pushed a modal state, close via back
-        if (history.state && history.state.__modal) {
-          history.back();
-        } else {
-          closeModals();
-        }
+        if (history.state && history.state.__modal) history.back();
+        else closeModals();
       };
 
       // lock scroll for modals
@@ -655,24 +783,18 @@
 
       // popstate: browser back closes modal
       useEffect(() => {
-        const onPopState = () => {
-          closeModals();
-        };
+        const onPopState = () => closeModals();
         window.addEventListener("popstate", onPopState);
         return () => window.removeEventListener("popstate", onPopState);
       }, []);
 
       // push history state when opening modals
       useEffect(() => {
-        if (selectedProject) {
-          history.pushState({ __modal: "project", id: selectedProject.id }, "");
-        }
+        if (selectedProject) history.pushState({ __modal: "project", id: selectedProject.id }, "");
       }, [selectedProject]);
 
       useEffect(() => {
-        if (selectedReel) {
-          history.pushState({ __modal: "reel", id: selectedReel.id }, "");
-        }
+        if (selectedReel) history.pushState({ __modal: "reel", id: selectedReel.id }, "");
       }, [selectedReel]);
 
       return (
@@ -840,23 +962,8 @@
                   </div>
                 </div>
 
-                <form className="space-y-6 md:pt-4" onSubmit={(e) => e.preventDefault()}>
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold uppercase tracking-wide">Name</label>
-                    <input type="text" className="w-full bg-transparent border-b border-zinc-300 py-4 text-xl focus:outline-none focus:border-black transition-colors rounded-none placeholder:text-zinc-300" placeholder="Jane Doe" />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold uppercase tracking-wide">Email</label>
-                    <input type="email" className="w-full bg-transparent border-b border-zinc-300 py-4 text-xl focus:outline-none focus:border-black transition-colors rounded-none placeholder:text-zinc-300" placeholder="jane@example.com" />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold uppercase tracking-wide">Project Details</label>
-                    <textarea rows="4" className="w-full bg-transparent border-b border-zinc-300 py-4 text-xl focus:outline-none focus:border-black transition-colors rounded-none placeholder:text-zinc-300 resize-none" placeholder="Tell me about your timeline and goals..." />
-                  </div>
-                  <button type="submit" className="mt-8 px-8 py-4 bg-black text-white font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors rounded-sm w-full md:w-auto">
-                    Send Request
-                  </button>
-                </form>
+                {/* ✅ FORMSPREE FORM HERE */}
+                <ContactForm />
               </div>
 
               <div className="border-t border-zinc-200 mt-20 pt-8 flex flex-col md:flex-row justify-between text-sm text-zinc-500">
